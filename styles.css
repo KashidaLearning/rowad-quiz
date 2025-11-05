@@ -163,9 +163,9 @@ color: #fff;    margin-bottom: 25px;
   position: absolute; 
   left: 10px;
   top: 10px;
-  color: red;
+  color: #B2BEB5;
   background-color: #fff;
-  border: 2px solid red;
+  border: 2px solid #B2BEB5;
   border-radius: 6px; 
   padding: 4px 10px; 
   font-size: 22px;
@@ -178,7 +178,7 @@ color: #fff;    margin-bottom: 25px;
 }
 
 .close:hover {
-  background-color: red;
+  background-color:#B2BEB5;
   color: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transform: scale(1.1);
