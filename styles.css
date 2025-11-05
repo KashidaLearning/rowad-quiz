@@ -165,9 +165,10 @@ color: #fff;    margin-bottom: 25px;
   top: 10px;
   color: #B2BEB5;
   background-color: #fff;
-  border: 2px solid #B2BEB5;
-  border-radius: 6px; 
-  padding: 4px 10px; 
+  border: 1.5px solid #B2BEB5;
+  border-radius: 5px; 
+  padding: 2px 6px;
+  font-size: 16px; 
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
@@ -181,7 +182,7 @@ color: #fff;    margin-bottom: 25px;
   background-color:#B2BEB5;
   color: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .feedback-title {
