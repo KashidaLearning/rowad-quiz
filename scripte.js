@@ -94,7 +94,7 @@ const feedbackText = document.getElementById("feedbackText");
 const closeModal = document.getElementById("closeModal");
 
 function showFeedbackModal(feedback) {
-  feedbackText.innerText = feedback;
+  feedbackText.innerHTML = feedback;
   feedbackModal.classList.add("show"); // triggers fade-in
 }
 
