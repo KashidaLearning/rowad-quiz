@@ -40,7 +40,8 @@ async function calculateFeedback() {
   let feedback = "";
   if (count.A > count.B && count.A > count.C) {
     feedback = `    رائد أعمال ناشئ
-     أنت تبني أسسًا قوية! يمكن لدورة رواد نموّ أن تساعدك على الانتقال إلى مرحلة النمو المنظم.
+     أنت تبني أسسًا قوية! يمكن لدورة رواد بداية أن تساعدك على اكتساب قدرٍ جيّد من المعرفة حول كيفية إدارة الشؤون المالية في الشركات الناشئة. 
+وعندما تتشكّل لديك الرغبة في نموّ مشروعك، التحق بدورة رواد نموّ لاكتساب المعرفة اللازمة حول كيفية تنمية أعمالك من خلال التمويل الخارجي. 
     `
       
    ;
@@ -53,7 +54,7 @@ async function calculateFeedback() {
   } 
   else if (count.C > count.A && count.C > count.B) {
   feedback = `   بطل مرحلة النمو
-     أنت جاهز للنمو! طوّر خبرتك من خلال وحدات رواد نموّ المتقدمة حول التوسع والتمويل.
+     أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة رواد نموّ حول التوسّع والتمويل.
     ` ; } 
   else if (count.A === count.B && count.A > count.C) {
   feedback = `   جاهز للتوسع
@@ -67,14 +68,38 @@ async function calculateFeedback() {
     ` ; }
   else if (count.B === count.C && count.B > count.A) {
   feedback = `   بطل مرحلة النمو
-أنت جاهز للنمو! طوّر خبرتك من خلال وحدات رواد نموّ المتقدمة حول التوسع والتمويل.
+أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة رواد نموّ حول التوسّع والتمويل.
 ` ; }
   else {
     feedback = "";
   }
 
-  feedbackBox.style.display = "block";
-  feedbackBox.innerText = feedback;
+const feedbackModal = document.getElementById("feedbackModal");
+const feedbackText = document.getElementById("feedbackText");
+const closeModal = document.getElementById("closeModal");
+
+function showFeedbackModal(feedback) {
+  feedbackText.innerText = feedback;
+  feedbackModal.classList.add("show"); // triggers fade-in
+}
+
+function hideFeedbackModal() {
+  feedbackModal.classList.remove("show"); // triggers fade-out
+}
+
+// Show modal after calculating feedback
+showFeedbackModal(feedback);
+
+// Close modal when clicking X
+closeModal.onclick = hideFeedbackModal;
+
+// Close modal if clicking outside modal content
+window.onclick = (event) => {
+  if (event.target === feedbackModal) {
+    hideFeedbackModal();
+  }
+};
+
 
   // Save to database
   const answers = {
