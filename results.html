@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Results Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .charts {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  canvas {
+    width: 45% !important;
+    height: 250px !important;
+  }
+  #googlePieChart {
+    width: 45%;
+    height: 250px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background: #f2f2f2;
+  }
+  .actions {
+    text-align: right;
+    margin-bottom: 15px;
+  }
+  button {
+    margin-left: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Survey Results Dashboard</h2>
+
+  <div class="actions">
+    <button onclick="exportPDF()">📄 Export PDF</button>
+    <button onclick="exportExcel()">📊 Export Excel</button>
+  </div>
+
+  <div class="charts">
+    <canvas id="answerChart"></canvas>
+    <div id="googlePieChart"></div>
+  </div>
+
+  <table id="resultsTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Feedback</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+let globalData = [];
+google.charts.load('current', {'packages':['corechart']});
+
+async function loadResults() {
+  const res = await fetch('get_results.php');
+  const data = await res.json();
+  globalData = data;
+
+  if (!data || data.length === 0) {
+    alert("No results found yet.");
+    return;
+  }
+
+  const counts = { A: 0, B: 0, C: 0 };
+  const feedbackCounts = {};
+
+  data.forEach(row => {
+    ['q1','q2','q3','q4','q5'].forEach(q => {
+      if (row[q]) counts[row[q]]++;
+    });
+    feedbackCounts[row.feedback] = (feedbackCounts[row.feedback] || 0) + 1;
+  });
+
+  // Chart.js Bar Chart (Answers)
+  new Chart(document.getElementById('answerChart'), {
+    type: 'bar',
+    data: {
+      labels: ['A', 'B', 'C'],
+      datasets: [{
+        label: 'Answer Distribution',
+        data: [counts.A, counts.B, counts.C],
+        backgroundColor: ['#4caf50', '#2196f3', '#ff9800']
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      responsive: true,
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  // Google Pie Chart (Feedback)
+  google.charts.setOnLoadCallback(() => drawPieChart(feedbackCounts));
+
+  // Populate table
+  const tbody = document.querySelector("#resultsTable tbody");
+  tbody.innerHTML = "";
+  data.forEach((row, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.feedback}</td>
+      <td>${row.submitted_at || ''}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function drawPieChart(feedbackCounts) {
+  const chartData = [['Feedback', 'Count']];
+  for (const [key, value] of Object.entries(feedbackCounts)) {
+    chartData.push([key, value]);
+  }
+
+  const data = google.visualization.arrayToDataTable(chartData);
+  const options = {
+    title: 'Feedback Distribution',
+    pieHole: 0.3,
+    colors: ['#4caf50', '#2196f3', '#ff9800', '#9c27b0', '#00bcd4', '#8bc34a'],
+    chartArea: { width: '90%', height: '80%' },
+    legend: { position: 'right' }
+  };
+
+  const chart = new google.visualization.PieChart(document.getElementById('googlePieChart'));
+  chart.draw(data, options);
+}
+
+function exportPDF() {
+  import('https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js').then(() => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape' });
+
+    doc.setFontSize(14);
+    doc.text("Quiz Results Summary", 14, 20);
+
+    let y = 35;
+    doc.setFontSize(10);
+    globalData.forEach((r, i) => {
+      doc.text(`${i+1}. ${r.name} | ${r.email} | ${r.feedback}`, 14, y);
+      y += 8;
+      if (y > 190) { doc.addPage(); y = 20; }
+    });
+
+    doc.save("quiz_results.pdf");
+  });
+}
+
+function exportExcel() {
+  const wsData = [["#", "Name", "Email", "Feedback", "Date"]];
+  globalData.forEach((r, i) => {
+    wsData.push([i+1, r.name, r.email, r.feedback, r.submitted_at || ""]);
+  });
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  XLSX.utils.book_append_sheet(wb, ws, "Results");
+  XLSX.writeFile(wb, "quiz_results.xlsx");
+}
+
+loadResults();
+</script>
+
+</body>
+</html>
