@@ -1,10 +1,10 @@
 <?php
 header("Content-Type: application/json");
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "quiz_rowad";
+$host = "localhost";     
+$user = "quizuser";           
+$pass = "Kashida@2025";
+$dbname = "quiz_rowad";   
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
