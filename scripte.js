@@ -39,7 +39,8 @@ async function calculateFeedback() {
   // Determine feedback text
   let feedback = "";
   if (count.A > count.B && count.A > count.C) {
-    feedback = `    رائد أعمال ناشئ
+    feedback = `    <span class="feedback-title">رائد أعمال ناشئ</span>
+  <br>
      أنت تبني أسسًا قوية! يمكن لدورة رواد بداية أن تساعدك على اكتساب قدرٍ جيّد من المعرفة حول كيفية إدارة الشؤون المالية في الشركات الناشئة. 
 وعندما تتشكّل لديك الرغبة في نموّ مشروعك، التحق بدورة رواد نموّ لاكتساب المعرفة اللازمة حول كيفية تنمية أعمالك من خلال التمويل الخارجي. 
     `
@@ -48,26 +49,40 @@ async function calculateFeedback() {
       
   } 
   else if (count.B > count.A && count.B > count.C) {
-  feedback = `   جاهز للتوسع
+  feedback = `   
+   <span class="feedback-title">جاهز للتوسع</span>
+  <br>
+  
      أنت على الطريق الصحيح! اكتشف دورة رواد نموّ لتعزيز استراتيجيتك المالية وجذب الاستثمار.
     `;
   } 
   else if (count.C > count.A && count.C > count.B) {
-  feedback = `   بطل مرحلة النمو
+  feedback = `  
+   <span class="feedback-title"> بطل مرحلة النمو</span>
+  <br>
      أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة رواد نموّ حول التوسّع والتمويل.
     ` ; } 
   else if (count.A === count.B && count.A > count.C) {
-  feedback = `   جاهز للتوسع
+  feedback = ` 
+   <span class="feedback-title"> جاهز للتوسع</span>
+  <br>
+   
      أنت على الطريق الصحيح! اكتشف دورة رواد نموّ لتعزيز استراتيجيتك المالية وجذب الاستثمار.
     ` ; }
     
     
   else if (count.A === count.C && count.A > count.B) {
-  feedback = `   جاهز للتوسع
+  feedback = ` 
+   <span class="feedback-title"> جاهز للتوسع</span>
+  <br>
+   
     أنت على الطريق الصحيح! اكتشف دورة رواد نموّ لتعزيز استراتيجيتك المالية وجذب الاستثمار.
     ` ; }
   else if (count.B === count.C && count.B > count.A) {
-  feedback = `   بطل مرحلة النمو
+  feedback = `
+   <span class="feedback-title">بطل مرحلة النمو</span>
+  <br>
+     
 أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة رواد نموّ حول التوسّع والتمويل.
 ` ; }
   else {

@@ -184,4 +184,12 @@ color: #fff;    margin-bottom: 25px;
   transform: scale(1.1);
 }
 
+.feedback-title {
+  font-weight: bold;
+  font-size: 20px; /* make it bigger */
+  display: block;
+  margin-bottom: 8px; /* small gap after title */
+}
+
+
 
