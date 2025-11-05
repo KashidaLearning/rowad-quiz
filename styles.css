@@ -185,10 +185,11 @@ color: #fff;    margin-bottom: 25px;
 }
 
 .feedback-title {
+  color: #00454B;
   font-weight: bold;
-  font-size: 20px; /* make it bigger */
+  font-size: 24px;
   display: block;
-  margin-bottom: 8px; /* small gap after title */
+  margin-bottom: 8px;
 }
 
 
