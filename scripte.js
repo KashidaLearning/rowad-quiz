@@ -39,27 +39,27 @@ async function calculateFeedback() {
   // Determine feedback text
   let feedback = "";
   if (count.A > count.B && count.A > count.C) {
-    feedback = `<span class="feedback-title">رائد أعمال ناشئ</span>
-  <br>
-     أنت تبني أسسًا قوية! يمكن لدورة رواد بداية أن تساعدك على اكتساب قدرٍ جيّد من المعرفة حول كيفية إدارة الشؤون المالية في الشركات الناشئة. 
+   feedback = `<span class="feedback-title">رائد أعمال ناشئ</span>
+<br>
+أنت تبني أسسًا قوية! يمكن لدورة <a href="https://rowadjourney.com/courses/course-v1:Riyali+102+Rowad/about" target="_blank">رواد بداية</a> أن تساعدك على اكتساب قدرٍ جيّد من المعرفة حول كيفية إدارة الشؤون المالية في الشركات الناشئة. 
 وعندما تتشكّل لديك الرغبة في نموّ مشروعك، التحق بدورة رواد نموّ لاكتساب المعرفة اللازمة حول كيفية تنمية أعمالك من خلال التمويل الخارجي. 
-    `
-      
-   ;
+`;
+
       
   } 
   else if (count.B > count.A && count.B > count.C) {
   feedback = `<span class="feedback-title">جاهز للتوسع</span>
-  <br>
-  
-     أنت على الطريق الصحيح! اكتشف دورة رواد نموّ لتعزيز استراتيجيتك المالية وجذب الاستثمار.
-    `;
+<br>
+أنت على الطريق الصحيح! اكتشف دورة <a href="https://rowadjourney.com/courses/course-v1:rowad+2.0ar+2022/about" target="_blank">رواد نموّ</a> لتعزيز استراتيجيتك المالية وجذب الاستثمار.
+`;
+
   } 
   else if (count.C > count.A && count.C > count.B) {
-  feedback = `<span class="feedback-title"> بطل مرحلة النمو</span>
-  <br>
-     أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة رواد نموّ حول التوسّع والتمويل.
-    ` ; } 
+ feedback = `<span class="feedback-title">بطل مرحلة النمو</span>
+<br>
+أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة <a href="https://rowadjourney.com/courses/course-v1:rowad+2.0ar+2022/about" target="_blank">رواد نموّ</a> حول التوسّع والتمويل.
+`;
+  }
   else if (count.A === count.B && count.A > count.C) {
   feedback = `<span class="feedback-title"> جاهز للتوسع</span>
   <br>
@@ -69,17 +69,17 @@ async function calculateFeedback() {
     
     
   else if (count.A === count.C && count.A > count.B) {
-  feedback = `<span class="feedback-title"> جاهز للتوسع</span>
-  <br>
-   
-    أنت على الطريق الصحيح! اكتشف دورة رواد نموّ لتعزيز استراتيجيتك المالية وجذب الاستثمار.
-    ` ; }
+  feedback = `<span class="feedback-title">جاهز للتوسع</span>
+<br>
+أنت على الطريق الصحيح! اكتشف دورة <a href="https://rowadjourney.com/courses/course-v1:rowad+2.0ar+2022/about" target="_blank">رواد نموّ</a> لتعزيز استراتيجيتك المالية وجذب الاستثمار.
+`;
+  }
   else if (count.B === count.C && count.B > count.A) {
-  feedback = `<span class="feedback-title">بطل مرحلة النمو</span>
-  <br>
-     
-أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة رواد نموّ حول التوسّع والتمويل.
-` ; }
+ feedback = `<span class="feedback-title">بطل مرحلة النمو</span>
+<br>
+أنت جاهز للنمو! طوّر خبرتك من خلال استكشاف الوحدات المناسبة لك في دورة <a href="https://rowadjourney.com/courses/course-v1:rowad+2.0ar+2022/about" target="_blank">رواد نموّ</a> حول التوسّع والتمويل.
+`;
+  }
   else {
     feedback = "";
   }
